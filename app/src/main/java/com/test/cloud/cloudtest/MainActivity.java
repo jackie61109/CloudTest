@@ -9,16 +9,19 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.test.cloud.cloudtest.connection.VolleyConnection;
 import com.test.cloud.cloudtest.model.CloudItems;
+import com.test.cloud.cloudtest.model.CloudListItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String CLOUD_URL = "https://my-json-server.typicode.com/jackie61109/CloudTest/items";
-    private ArrayList<CloudItems> items = new ArrayList<>();
     private RequestQueue requestQueue;
 
     @Override
@@ -38,11 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue = CloudApplication.getRequestQueue();
         requestQueue.add(new VolleyConnection().connectByGet(CLOUD_URL, new Response.Listener<String>() {
             @Override
-            public void onResponse(String s) {
-                //String s即为服务器返回的数据
+            public void onResponse(String response) {
                 Toast.makeText(MainActivity.this,"連線成功",Toast.LENGTH_SHORT).show();
-                Log.d("CLOUD ", s);
-                RecycleViewActivity.start(MainActivity.this,null);
+                Log.d("CLOUD ", response);
+
+                ArrayList<CloudItems> item = new Gson().fromJson(response,new TypeToken<List<CloudItems>>(){}.getType());
+                CloudListItem listItem = new CloudListItem();
+                listItem.setItems(item);
+
+                RecycleViewActivity.start(MainActivity.this,listItem);
 
             }
         }, null));

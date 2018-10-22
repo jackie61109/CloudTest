@@ -1,6 +1,8 @@
 package com.test.cloud.cloudtest.model;
 
-public class CloudItems {
+import java.io.Serializable;
+
+public class CloudItems implements Serializable {
 
     private String id;
     private String title;
