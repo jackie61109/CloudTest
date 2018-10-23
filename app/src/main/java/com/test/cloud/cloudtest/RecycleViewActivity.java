@@ -36,8 +36,7 @@ public class RecycleViewActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        mRecyclerView.setLayoutManager(new
-                StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
 
         RecycleViewAdapter adapter = new RecycleViewAdapter(this);
         mRecyclerView.setAdapter(adapter);
